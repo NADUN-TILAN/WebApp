@@ -1,0 +1,333 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="WebAppDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="WATaskAssignments">
+          <Key>
+            <PropertyRef Name="AssignmentID" />
+          </Key>
+          <Property Name="AssignmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="TaskID" Type="int" />
+          <Property Name="AssignedDate" Type="datetime" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="WATasks">
+          <Key>
+            <PropertyRef Name="TaskID" />
+          </Key>
+          <Property Name="TaskID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Assignees" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DueDate" Type="date" Nullable="false" />
+          <Property Name="Category" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+          <Property Name="Assignor" Type="varchar" MaxLength="100" />
+          <Property Name="UploadedDocs" Type="varchar" MaxLength="10" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="WAUsers">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Department" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DOB" Type="date" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Country" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ContactNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__WATaskAss__TaskI__1A14E395">
+          <End Role="WATasks" Type="Self.WATasks" Multiplicity="0..1" />
+          <End Role="WATaskAssignments" Type="Self.WATaskAssignments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WATasks">
+              <PropertyRef Name="TaskID" />
+            </Principal>
+            <Dependent Role="WATaskAssignments">
+              <PropertyRef Name="TaskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WATaskAss__UserI__1920BF5C">
+          <End Role="WAUsers" Type="Self.WAUsers" Multiplicity="0..1" />
+          <End Role="WATaskAssignments" Type="Self.WATaskAssignments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WAUsers">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="WATaskAssignments">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="WA_DeleteUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="WA_GetUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="WA_Insert_Users" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="MiddleName" Type="varchar" Mode="In" />
+          <Parameter Name="LastName" Type="varchar" Mode="In" />
+          <Parameter Name="Department" Type="varchar" Mode="In" />
+          <Parameter Name="DOB" Type="date" Mode="In" />
+          <Parameter Name="Address" Type="varchar" Mode="In" />
+          <Parameter Name="Country" Type="varchar" Mode="In" />
+          <Parameter Name="ContactNo" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="CreatedDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="WA_Update_Users" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="MiddleName" Type="varchar" Mode="In" />
+          <Parameter Name="LastName" Type="varchar" Mode="In" />
+          <Parameter Name="Department" Type="varchar" Mode="In" />
+          <Parameter Name="DOB" Type="date" Mode="In" />
+          <Parameter Name="Address" Type="varchar" Mode="In" />
+          <Parameter Name="Country" Type="varchar" Mode="In" />
+          <Parameter Name="ContactNo" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="CreatedDate" Type="datetime" Mode="In" />
+        </Function>
+        <EntityContainer Name="WebAppDBModelStoreContainer">
+          <EntitySet Name="WATaskAssignments" EntityType="Self.WATaskAssignments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WATasks" EntityType="Self.WATasks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WAUsers" EntityType="Self.WAUsers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__WATaskAss__TaskI__1A14E395" Association="Self.FK__WATaskAss__TaskI__1A14E395">
+            <End Role="WATasks" EntitySet="WATasks" />
+            <End Role="WATaskAssignments" EntitySet="WATaskAssignments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WATaskAss__UserI__1920BF5C" Association="Self.FK__WATaskAss__UserI__1920BF5C">
+            <End Role="WAUsers" EntitySet="WAUsers" />
+            <End Role="WATaskAssignments" EntitySet="WATaskAssignments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WebAppDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="WATaskAssignment">
+          <Key>
+            <PropertyRef Name="AssignmentID" />
+          </Key>
+          <Property Name="AssignmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="TaskID" Type="Int32" />
+          <Property Name="AssignedDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="WATask" Relationship="Self.FK__WATaskAss__TaskI__1A14E395" FromRole="WATaskAssignments" ToRole="WATasks" />
+          <NavigationProperty Name="WAUser" Relationship="Self.FK__WATaskAss__UserI__1920BF5C" FromRole="WATaskAssignments" ToRole="WAUsers" />
+        </EntityType>
+        <EntityType Name="WATask">
+          <Key>
+            <PropertyRef Name="TaskID" />
+          </Key>
+          <Property Name="TaskID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Assignees" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DueDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Category" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Assignor" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UploadedDocs" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="WATaskAssignments" Relationship="Self.FK__WATaskAss__TaskI__1A14E395" FromRole="WATasks" ToRole="WATaskAssignments" />
+        </EntityType>
+        <EntityType Name="WAUser">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ContactNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="WATaskAssignments" Relationship="Self.FK__WATaskAss__UserI__1920BF5C" FromRole="WAUsers" ToRole="WATaskAssignments" />
+        </EntityType>
+        <Association Name="FK__WATaskAss__TaskI__1A14E395">
+          <End Role="WATasks" Type="Self.WATask" Multiplicity="0..1" />
+          <End Role="WATaskAssignments" Type="Self.WATaskAssignment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WATasks">
+              <PropertyRef Name="TaskID" />
+            </Principal>
+            <Dependent Role="WATaskAssignments">
+              <PropertyRef Name="TaskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WATaskAss__UserI__1920BF5C">
+          <End Role="WAUsers" Type="Self.WAUser" Multiplicity="0..1" />
+          <End Role="WATaskAssignments" Type="Self.WATaskAssignment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WAUsers">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="WATaskAssignments">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WebAppDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="WATaskAssignments" EntityType="Self.WATaskAssignment" />
+          <EntitySet Name="WATasks" EntityType="Self.WATask" />
+          <EntitySet Name="WAUsers" EntityType="Self.WAUser" />
+          <AssociationSet Name="FK__WATaskAss__TaskI__1A14E395" Association="Self.FK__WATaskAss__TaskI__1A14E395">
+            <End Role="WATasks" EntitySet="WATasks" />
+            <End Role="WATaskAssignments" EntitySet="WATaskAssignments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WATaskAss__UserI__1920BF5C" Association="Self.FK__WATaskAss__UserI__1920BF5C">
+            <End Role="WAUsers" EntitySet="WAUsers" />
+            <End Role="WATaskAssignments" EntitySet="WATaskAssignments" />
+          </AssociationSet>
+          <FunctionImport Name="WA_DeleteUsers">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="WA_GetUsers" ReturnType="Collection(WebAppDBModel.WA_GetUsers_Result)" />
+          <FunctionImport Name="WA_Insert_Users">
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="MiddleName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="Department" Mode="In" Type="String" />
+            <Parameter Name="DOB" Mode="In" Type="DateTime" />
+            <Parameter Name="Address" Mode="In" Type="String" />
+            <Parameter Name="Country" Mode="In" Type="String" />
+            <Parameter Name="ContactNo" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="CreatedDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="WA_Update_Users">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="MiddleName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="Department" Mode="In" Type="String" />
+            <Parameter Name="DOB" Mode="In" Type="DateTime" />
+            <Parameter Name="Address" Mode="In" Type="String" />
+            <Parameter Name="Country" Mode="In" Type="String" />
+            <Parameter Name="ContactNo" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="CreatedDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="WA_GetUsers_Result">
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="MiddleName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Department" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="DOB" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="Country" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ContactNo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WebAppDBModelStoreContainer" CdmEntityContainer="WebAppDBEntities">
+          <EntitySetMapping Name="WATaskAssignments">
+            <EntityTypeMapping TypeName="WebAppDBModel.WATaskAssignment">
+              <MappingFragment StoreEntitySet="WATaskAssignments">
+                <ScalarProperty Name="AssignmentID" ColumnName="AssignmentID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+                <ScalarProperty Name="AssignedDate" ColumnName="AssignedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WATasks">
+            <EntityTypeMapping TypeName="WebAppDBModel.WATask">
+              <MappingFragment StoreEntitySet="WATasks">
+                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Assignees" ColumnName="Assignees" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Assignor" ColumnName="Assignor" />
+                <ScalarProperty Name="UploadedDocs" ColumnName="UploadedDocs" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WAUsers">
+            <EntityTypeMapping TypeName="WebAppDBModel.WAUser">
+              <MappingFragment StoreEntitySet="WAUsers">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="WA_DeleteUsers" FunctionName="WebAppDBModel.Store.WA_DeleteUsers" />
+          <FunctionImportMapping FunctionImportName="WA_GetUsers" FunctionName="WebAppDBModel.Store.WA_GetUsers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WebAppDBModel.WA_GetUsers_Result">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="WA_Insert_Users" FunctionName="WebAppDBModel.Store.WA_Insert_Users" />
+          <FunctionImportMapping FunctionImportName="WA_Update_Users" FunctionName="WebAppDBModel.Store.WA_Update_Users" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
