@@ -18,7 +18,7 @@ namespace WebApp.Services
 
         public void AddUser(User user)
         {
-            _userRepository.AddUser(user);
+            _userRepository.AddUserWithADO(user);
         }
     }
 }

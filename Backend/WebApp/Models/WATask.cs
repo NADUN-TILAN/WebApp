@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebApp
+namespace WebApp.Models
 {
     using System;
     using System.Collections.Generic;

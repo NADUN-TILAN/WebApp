@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d8876ae750d04eb3b367c57699403ea2" Name="Diagram1">
+      <Diagram DiagramId="4d8f6774ede9440292bfa759aef2272b" Name="Diagram1">
         <EntityTypeShape EntityType="WebAppDBModel.WATaskAssignment" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="WebAppDBModel.WATask" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="WebAppDBModel.WAUser" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />

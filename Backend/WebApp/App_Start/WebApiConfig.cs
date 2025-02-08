@@ -10,20 +10,14 @@ namespace WebApp
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
+            // Enable CORS (Allow requests from specific origins)
+            //var cors = new EnableCorsAttribute("*", "*", "*"); // Adjust as needed
+            //config.EnableCors(cors);
 
-            // Web API routes
-            //config.MapHttpAttributeRoutes();
-
-            //config.Routes.MapHttpRoute(
-            //    name: "DefaultApi",
-            //    routeTemplate: "api/{controller}/{id}",
-            //    defaults: new { id = RouteParameter.Optional }
-            //);
-
-            // Web API routes
+            // Enable attribute-based routing
             config.MapHttpAttributeRoutes();
 
+            // Define a default Web API route
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
