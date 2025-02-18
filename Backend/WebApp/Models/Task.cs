@@ -4,6 +4,7 @@ namespace WebApp.Models
 {
     public class TaskModel
     {
+        public int TaskID { get; set; }
         public string Title { get; set; }
         public string Assignee { get; set; }
         public DateTime DueDate { get; set; }

@@ -21,6 +21,7 @@ namespace WebApp.Controllers
             uempRepository = new UempRepository(new EmployeeTaskEntities());
         }
 
+        // insert empployees
         [HttpPost]
         [Route("add")]
         public IHttpActionResult AddUser([FromBody] User user)
@@ -32,6 +33,7 @@ namespace WebApp.Controllers
             return Ok(new { message = "User added successfully" });
         }
 
+        // fetching employees only
         [HttpGet]
         [Route("assignees")]
         public IHttpActionResult GetAssignees()
@@ -47,5 +49,20 @@ namespace WebApp.Controllers
             }
         }
 
+        // get and list all employees with info
+        [HttpGet]
+        [Route("informations")]
+        public IHttpActionResult GetAllusersinfo()
+        {
+            try
+            {
+                var user = uempRepository.GetAllUsersInfoFromDatabase();
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
     }
 }

@@ -31,7 +31,7 @@ namespace WebApp.DataAccessLayer
 
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    using (SqlCommand cmd = new SqlCommand("WA_GetUsers", conn))
+                    using (SqlCommand cmd = new SqlCommand("WA_Select_Users", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         conn.Open();
@@ -58,5 +58,52 @@ namespace WebApp.DataAccessLayer
             return assignee;
         }
 
+        // UsersInfoFromDatabase
+        public List<User> GetAllUsersInfoFromDatabase()
+        {
+            var User = new List<User>();
+
+            try
+            {
+                string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"]?.ConnectionString;
+
+                if (string.IsNullOrEmpty(connectionString))
+                {
+                    throw new InvalidOperationException("Database connection string is not configured.");
+                }
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("WA_Select_Users_Info", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        conn.Open();
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                User.Add(new User
+                                {
+                                    UserID = Convert.ToInt32(reader["UserID"]),
+                                    FirstName = (string)reader["firstName"],
+                                    MiddleName = (string)reader["middleName"],
+                                    LastName = (string)reader["lastName"],
+                                    Email = (string)reader["email"],
+                                    ContactNo = (string)reader["contactNo"]
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching assignees: {ex.Message}");
+                throw;
+            }
+
+            return User;
+        }
     }
 }
