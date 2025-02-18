@@ -17,4 +17,9 @@ namespace WebApp.Models
         public string ContactNo { get; set; }     
         public string Email { get; set; }
     }
+
+    public class AssigneeModel
+    {
+        public string Assignee { get; set; }
+    }
 }

@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Cors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace WebApp
 {
@@ -10,11 +7,11 @@ namespace WebApp
     {
         public static void Register(HttpConfiguration config)
         {
-            // Enable CORS (Allow requests from specific origins)
-            //var cors = new EnableCorsAttribute("*", "*", "*"); // Adjust as needed
-            //config.EnableCors(cors);
+            // Correct usage of EnableCorsAttribute
+            var cors = new EnableCorsAttribute("*", "*", "*"); // Allow all origins, headers, and methods
+            config.EnableCors(cors); // No need to cast it
 
-            // Enable attribute-based routing
+            // Web API attribute routing
             config.MapHttpAttributeRoutes();
 
             // Define a default Web API route

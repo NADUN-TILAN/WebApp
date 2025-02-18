@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Web.Http;
+using System.Web.Http.Cors;
+using WebApp.DataAccessLayer;
 using WebApp.Models;
 using WebApp.Repositories;
 using WebApp.Services;
 
 namespace WebApp.Controllers
 {
-    [System.Web.Http.RoutePrefix("api/users")]
+    [RoutePrefix("api/users")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")] // Apply CORS to this controller
     public class UsersController : ApiController
     {
         private readonly UserService userService;
+        private readonly UempRepository uempRepository;
 
         public UsersController()
         {
             userService = new UserService(new UserRepository(new EmployeeTaskEntities()));
+            uempRepository = new UempRepository(new EmployeeTaskEntities());
         }
 
         [HttpPost]
@@ -27,9 +32,20 @@ namespace WebApp.Controllers
             return Ok(new { message = "User added successfully" });
         }
 
-        private IHttpActionResult Ok(string v)
+        [HttpGet]
+        [Route("assignees")]
+        public IHttpActionResult GetAssignees()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var assignee = uempRepository.GetAssigneesFromDatabase(); 
+                return Ok(assignee);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
+
     }
 }
