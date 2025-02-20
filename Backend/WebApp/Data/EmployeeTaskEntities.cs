@@ -10,11 +10,12 @@ namespace WebApp.Models
         {
         }
 
-        public virtual DbSet<User> Users { get; set; }  // Map Users table
+        //public virtual DbSet<User> Users { get; set; }  // Map Users table
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<User>().ToTable("Users");
-        }
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<User>().ToTable("Users");
+        //}
+
     }
 }

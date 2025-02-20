@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using WebApp.DataAccessLayer;
 using WebApp.Models;
 using WebApp.Repositories;
 using WebApp.Services;
@@ -16,18 +17,21 @@ namespace WebApp.Controllers
     public class TasksController : ApiController
     {
         private readonly TaskService _taskService;
-        //private TaskService taskService;
+        private readonly TaskRepository taskRepository;
+        private readonly TasksGetRepo tasksGetRepo;
 
         // Dependency Injection Constructor
         public TasksController(TaskService taskService)
         {
-            _taskService = taskService;
+            _taskService = taskService;           
         }
 
         // Default constructor for manual instantiation
         public TasksController()
         {
             _taskService = new TaskService(new TaskRepository(new EmployeeTaskEntities()));
+            taskRepository = new TaskRepository(new EmployeeTaskEntities());
+            tasksGetRepo = new TasksGetRepo(new EmployeeTaskEntities());
         }
 
         [HttpPost]
@@ -128,6 +132,23 @@ namespace WebApp.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        // get and list all tasks info
+        [HttpGet]
+        [Route("informations")]
+        public IHttpActionResult GetAllTasksinfo()
+        {
+            try
+            {
+                var TaskModel = tasksGetRepo.GetAllTasksInfoFromDatabase();
+                return Ok(TaskModel);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
 
     }
 }

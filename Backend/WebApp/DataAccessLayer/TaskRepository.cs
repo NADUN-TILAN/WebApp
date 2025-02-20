@@ -9,11 +9,11 @@ namespace WebApp.Repositories
 {
     public class TaskRepository 
     {
-        private readonly string _connectionString;
+        private readonly EmployeeTaskEntities DbContext;
 
-        public TaskRepository(EmployeeTaskEntities employeeTaskEntities)
+        public TaskRepository(EmployeeTaskEntities dbContext)
         {
-            _connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            DbContext = dbContext;
         }
 
         //internal void AddTaskWithADO(Task task)
@@ -107,10 +107,16 @@ namespace WebApp.Repositories
         // Add a new task to the database
         public void AddTaskWithADO(TaskModel task)
         {
-            //try
-            //{
-                using (var connection = new SqlConnection(_connectionString))
-                {
+            
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new InvalidOperationException("Connection string 'DefaultConnection' is not defined in the config file.");
+            }
+
+            using (var connection = new SqlConnection(connectionString))
+            {
                      connection.Open();
                     using (var command = new SqlCommand("WA_Insert_Tasks", connection))
                     {
@@ -126,14 +132,9 @@ namespace WebApp.Repositories
 
                          command.ExecuteNonQueryAsync();
                     }
-                }
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw new Exception("Error inserting task into database.", ex);
-            //}
+            }
+            
         }
-
 
         //// Update an existing task by ID
         //public void UpdateTask(int id, TaskModel task)

@@ -305,39 +305,13 @@
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DataAccessLayer\TaskRepository.cs" />
+    <Compile Include="DataAccessLayer\TasksGetRepo.cs" />
     <Compile Include="DataAccessLayer\UempRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Task.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\WATask.cs">
-      <DependentUpon>WebAppDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\WATaskAssignment.cs">
-      <DependentUpon>WebAppDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\WAUser.cs">
-      <DependentUpon>WebAppDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\WA_GetUsers_Result.cs">
-      <DependentUpon>WebAppDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\WebAppDB.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WebAppDB.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\WebAppDB.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WebAppDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\WebAppDB.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WebAppDB.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\EmployeeTaskEntities.cs" />
     <Compile Include="DataAccessLayer\UserRepository.cs" />
@@ -364,16 +338,6 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Models\WebAppDB.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WebAppDB.edmx</DependentUpon>
-      <LastGenOutput>WebAppDB.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\WebAppDB.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WebAppDB.edmx</DependentUpon>
-      <LastGenOutput>WebAppDB.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -399,13 +363,6 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <EntityDeploy Include="Models\WebAppDB.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>WebAppDB.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\WebAppDB.edmx.diagram">
-      <DependentUpon>WebAppDB.edmx</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
@@ -429,6 +386,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\TasksGet\" />
     <Folder Include="Views\Users\" />
   </ItemGroup>
   <ItemGroup>
