@@ -12,6 +12,7 @@ namespace WebApp.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")] // Apply CORS to this controller
     public class UsersController : ApiController
     {
+
         private readonly UserService userService;
         private readonly UempRepository uempRepository;
 
@@ -64,5 +65,18 @@ namespace WebApp.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        // Get a user by ID
+        [HttpGet]
+        [Route("{id}")]
+        public IHttpActionResult GetUserById(int id)
+        {
+            var user = uempRepository.GetUserById(id);
+            if (user == null) return NotFound();
+            return Ok(user);
+        }
+        
+        
+        // End Point
     }
 }

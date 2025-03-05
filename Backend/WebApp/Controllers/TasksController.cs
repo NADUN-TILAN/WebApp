@@ -34,6 +34,7 @@ namespace WebApp.Controllers
             tasksGetRepo = new TasksGetRepo(new EmployeeTaskEntities());
         }
 
+        //AddTasks
         [HttpPost]
         [Route("add")]
         public async Task<IHttpActionResult> CreateTask()
@@ -149,6 +150,7 @@ namespace WebApp.Controllers
             }
         }
 
+        //AssignTasksMonitoring
 
     }
 }
