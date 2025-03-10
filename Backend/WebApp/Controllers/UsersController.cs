@@ -66,17 +66,66 @@ namespace WebApp.Controllers
             }
         }
 
-        // Get a user by ID
         [HttpGet]
-        [Route("{id}")]
-        public IHttpActionResult GetUserById(int id)
+        [Route("details/{id}/{firstname}/{lastname}")]
+        public IHttpActionResult GetUserById(int id, string firstname, string lastname)
         {
-            var user = uempRepository.GetUserById(id);
-            if (user == null) return NotFound();
+            var user = uempRepository.GetUserById(id, firstname, lastname);
+            if (user == null)
+            {
+                return NotFound();
+            }
             return Ok(user);
         }
-        
-        
+
+        [HttpPut]
+        [Route("update/{id}")]
+        public IHttpActionResult UpdateUser(int id, [FromBody] User updatedUser)
+        {
+            if (updatedUser == null) return BadRequest("Invalid user data");
+
+            try
+            {
+                userService.UserUpdateCRUD(id, updatedUser);
+                return Ok(new { message = "User updated successfully" });
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+
+        // Delete user
+        [HttpDelete]
+        [Route("{id}/{firstname}/{lastname}")]
+        public IHttpActionResult DeleteUser(int id, string firstname, string lastname)
+        {
+            if (id <= 0 || string.IsNullOrWhiteSpace(firstname) || string.IsNullOrWhiteSpace(lastname))
+            {
+                return BadRequest("Invalid user parameters.");
+            }
+
+            try
+            {
+                bool result = uempRepository.DeleteUser(id, firstname, lastname);
+
+                if (!result)
+                {
+                    return NotFound(); // 404 if user was not found/deleted
+                }
+
+                return Ok(new { message = "User deleted successfully" });
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(new Exception("An error occurred while deleting the user.", ex));
+            }
+        }
+
+
+
+
         // End Point
     }
 }

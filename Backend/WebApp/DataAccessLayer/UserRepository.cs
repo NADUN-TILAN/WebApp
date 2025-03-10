@@ -43,5 +43,39 @@ namespace WebApp.Repositories
                 }
             }
         }
+
+
+        // User CRUD : Update
+        public void UpdateUserWithADO(int id, User user)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new InvalidOperationException("Connection string 'DefaultConnection' is not defined in the config file.");
+            }
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (var command = new SqlCommand("WA_Update_Users", connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@userID", id); 
+                    command.Parameters.AddWithValue("@firstName", user.FirstName);
+                    command.Parameters.AddWithValue("@middleName", user.MiddleName);
+                    command.Parameters.AddWithValue("@lastName", user.LastName);
+                    command.Parameters.AddWithValue("@contactNo", user.ContactNo);
+                    command.Parameters.AddWithValue("@email", user.Email);
+
+                    int rowsAffected = command.ExecuteNonQuery();
+                    if (rowsAffected == 0)
+                    {
+                        throw new Exception("Update failed. User not found.");
+                    }
+                }
+            }
+        }
+
     }
 }

@@ -16,5 +16,11 @@ namespace WebApp.Services
         {
             _userRepository.AddUserWithADO(user);
         }
+
+        public void UserUpdateCRUD(int id, User user)
+        {
+            _userRepository.UpdateUserWithADO(id, user);
+        }
+
     }
 }

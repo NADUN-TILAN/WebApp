@@ -107,7 +107,7 @@ namespace WebApp.DataAccessLayer
         }
 
         // User List - Details
-        public List<User> GetUserById(int id)
+        public List<User> GetUserById(int id, string firstname, string lastname)
         {
             var users = new List<User>(); // Renamed from User to users
 
@@ -158,6 +158,58 @@ namespace WebApp.DataAccessLayer
 
             return users;
         }
+
+
+        // Delete 
+
+        public bool DeleteUser(int id, string firstname, string lastname)
+        {
+            if (id <= 0 || string.IsNullOrWhiteSpace(firstname) || string.IsNullOrWhiteSpace(lastname))
+            {
+                throw new ArgumentException("Invalid input parameters.");
+            }
+
+            try
+            {
+                string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"]?.ConnectionString;
+
+                if (string.IsNullOrEmpty(connectionString))
+                {
+                    throw new InvalidOperationException("Database connection string is not configured.");
+                }
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("WA_Delete_Users", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@UserID", SqlDbType.Int) { Value = id });
+                        cmd.Parameters.Add(new SqlParameter("@FirstName", SqlDbType.VarChar, 100) { Value = firstname });
+                        cmd.Parameters.Add(new SqlParameter("@LastName", SqlDbType.VarChar, 100) { Value = lastname });
+
+                        conn.Open();
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        return rowsAffected > 0; // Returns true if a row was deleted
+                    }
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                // Log the error properly (use a logging framework)
+                Console.WriteLine($"SQL Error deleting user: {sqlEx.Message}");
+                throw new Exception("Database error occurred while deleting user.", sqlEx);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting user: {ex.Message}");
+                throw new Exception("An error occurred while deleting the user.", ex);
+            }
+        }
+
+
+
+
 
 
     }
