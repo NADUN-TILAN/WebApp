@@ -150,6 +150,19 @@ namespace WebApp.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("details/{id}")]
+        public IHttpActionResult GetTaskById(int id)
+        {
+            var task = tasksGetRepo.GetTaskById(id);
+            if (task == null)
+            {
+                return NotFound();
+            }
+            return Ok(task);
+        }
+
+
         //AssignTasksMonitoring
 
     }

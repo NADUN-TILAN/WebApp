@@ -123,11 +123,11 @@ namespace WebApp.Repositories
                         command.CommandType = CommandType.StoredProcedure;
 
                         command.Parameters.AddWithValue("@title", task.Title);
-                        command.Parameters.AddWithValue("@assignees", task.Assignee);
+                        //command.Parameters.AddWithValue("@assignees", task.Assignee);
                         command.Parameters.AddWithValue("@dueDate", task.DueDate);
                         command.Parameters.AddWithValue("@category", task.Category);
                         command.Parameters.AddWithValue("@description", task.Description);
-                        command.Parameters.AddWithValue("@assignor", task.Assignor);
+                        //command.Parameters.AddWithValue("@assignor", task.Assignor);
                         command.Parameters.AddWithValue("@uploadedDocs", task.UploadedDocs);
 
                          command.ExecuteNonQueryAsync();
