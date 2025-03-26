@@ -17,5 +17,10 @@ namespace WebApp.Services
         {
             _taskRepository.AddTaskWithADO(task);
         }
+
+        public void TaskUpdateCRUD(int id, TaskModel task)
+        {
+            _taskRepository.UpdateTaskWithADO(id, task);
+        }
     }
 }

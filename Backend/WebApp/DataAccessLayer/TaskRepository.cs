@@ -136,36 +136,34 @@ namespace WebApp.Repositories
             
         }
 
-        //// Update an existing task by ID
-        //public void UpdateTask(int id, TaskModel task)
-        //{
-        //    try
-        //    {
-        //        using (var connection = new SqlConnection(_connectionString))
-        //        {
-        //            connection.Open();
-        //            using (var command = new SqlCommand("WA_Update_Tasks", connection))
-        //            {
-        //                command.CommandType = CommandType.StoredProcedure;
+        // Update an existing task by ID
+        public void UpdateTaskWithADO(int id, TaskModel task)
+        {
+            try
+            {
+                using (var connection = new SqlConnection("DefaultConnection"))
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand("WA_Update_Tasks", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
 
-        //                command.Parameters.AddWithValue("@id", id);
-        //                command.Parameters.AddWithValue("@title", task.Title);
-        //                command.Parameters.AddWithValue("@assignee", task.Assignee);
-        //                command.Parameters.AddWithValue("@dueDate", task.DueDate);
-        //                command.Parameters.AddWithValue("@category", task.Category);
-        //                command.Parameters.AddWithValue("@description", task.Description);
-        //                command.Parameters.AddWithValue("@assignor", task.Assignor);
-        //                command.Parameters.AddWithValue("@uploadeddocs", task.UploadedDocs > 0 ? task.UploadedDocs : (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@id", id);
+                        command.Parameters.AddWithValue("@title", task.Title);
+                        command.Parameters.AddWithValue("@dueDate", task.DueDate);
+                        command.Parameters.AddWithValue("@category", task.Category);
+                        command.Parameters.AddWithValue("@description", task.Description);
+                        //command.Parameters.AddWithValue("@uploadeddocs", task.UploadedDocs > 0 ? task.UploadedDocs : (object)DBNull.Value);
 
-        //                command.ExecuteNonQuery();
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception("Error updating task in database.", ex);
-        //    }
-        //}
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error updating task in database.", ex);
+            }
+        }
 
         // Delete a task by ID
         //public void DeleteTask(int id)

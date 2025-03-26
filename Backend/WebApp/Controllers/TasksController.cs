@@ -59,10 +59,10 @@ namespace WebApp.Controllers
                 var newTask = new TaskModel
                 {
                     Title = provider.FormData["title"],
-                    Assignee = provider.FormData["assignee"],
+                    //Assignee = provider.FormData["assignee"],
                     Category = provider.FormData["category"],
                     Description = provider.FormData["description"],
-                    Assignor = provider.FormData["assignor"],
+                    //Assignor = provider.FormData["assignor"],
                     UploadedDocs = 0 
                 };
 
@@ -150,18 +150,55 @@ namespace WebApp.Controllers
             }
         }
 
+        //[HttpGet]
+        //[Route("details/{id}")]
+        //public IHttpActionResult GetTaskById(int id)
+        //{
+        //    try
+        //    {
+        //        var TaskModel = tasksGetRepo.GetTaskById(id);
+
+        //        if (TaskModel == null)  // Handle cases where the task is not found
+        //        {
+        //            return NotFound();
+        //        }
+
+        //        return Ok(TaskModel);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return InternalServerError(ex);
+        //    }
+        //}
+
         [HttpGet]
-        [Route("details/{id}")]
-        public IHttpActionResult GetTaskById(int id)
+        [Route("details/{taskID}/{category}")]
+        public IHttpActionResult GetUserById(int id, string category) 
         {
-            var task = tasksGetRepo.GetTaskById(id);
-            if (task == null)
+            var TaskModel = tasksGetRepo.GetTaskById(id, category);
+            if (TaskModel == null)
             {
                 return NotFound();
             }
-            return Ok(task);
+            return Ok(TaskModel);
         }
 
+        [HttpPut]
+        [Route("update/{id}")]
+        public IHttpActionResult UpdateTask(int id, [FromBody] TaskModel updatedTask)
+        {
+            if (updatedTask == null) return BadRequest("Invalid task data");
+
+            try
+            {
+                _taskService.TaskUpdateCRUD(id, updatedTask);
+                return Ok(new { message = "Task updated successfully" });
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
 
         //AssignTasksMonitoring
 

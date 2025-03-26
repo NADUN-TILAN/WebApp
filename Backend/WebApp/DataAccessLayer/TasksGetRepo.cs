@@ -62,9 +62,9 @@ namespace WebApp.DataAccessLayer
         }
 
         // Task List - Details
-        public List<TaskModel> GetTaskById(int id)
+        public TaskModel GetTaskById(int id, string category)
         {
-            var tasks = new List<TaskModel>(); // Renamed from Task to tasks
+            TaskModel tasks = null; 
 
             try
             {
@@ -80,24 +80,21 @@ namespace WebApp.DataAccessLayer
                     using (SqlCommand cmd = new SqlCommand("WA_Select_Task_Details", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-
-                        // Pass the id as a parameter to the stored procedure
                         cmd.Parameters.Add(new SqlParameter("@id", SqlDbType.Int)).Value = id;
 
                         conn.Open();
 
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            while (reader.Read())
+                            if (reader.Read())  
                             {
-                                tasks.Add(new TaskModel
-                                {
-                                    // Handling DBNull values and providing a default value 
+                                tasks = new TaskModel
+                                { 
                                     Title = reader["title"] as string ?? string.Empty,
-                                    DueDate = reader["duedate"] as DateTime? ?? DateTime.MinValue,
+                                    DueDate = reader["duedate"] as DateTime? ?? null,
                                     Category = reader["category"] as string ?? string.Empty,
                                     Description = reader["description"] as string ?? string.Empty,
-                                });
+                                };
                             }
                         }
                     }
@@ -105,12 +102,12 @@ namespace WebApp.DataAccessLayer
             }
             catch (Exception ex)
             {
-                // Log the exception or handle it as needed
-                Console.WriteLine($"Error fetching user details: {ex.Message}");
-                throw; // Optionally rethrow the exception
+                Console.WriteLine($"Error fetching task details: {ex.Message}");
+                throw;
             }
 
-            return tasks;
+            return tasks;  
         }
+
     }
 }
